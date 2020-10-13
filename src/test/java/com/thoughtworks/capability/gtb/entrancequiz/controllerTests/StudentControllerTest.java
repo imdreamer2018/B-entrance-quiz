@@ -44,4 +44,13 @@ public class StudentControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    void should_return_student_info_when_create_student_success() throws Exception {
+        studentService.createStudent(student);
+        mockMvc.perform(get("/students"))
+                .andExpect(jsonPath("$.data", hasSize(1)))
+                .andExpect(jsonPath("$.data[0].studentName", is("杨乾")))
+                .andExpect(status().isOk());
+    }
+
 }
