@@ -38,4 +38,14 @@ public class StudentService {
         studentResponse.setData(studentList);
         return studentResponse;
     }
+
+    public StudentResponse<Student> createStudent(Student studentRequest) {
+        StudentResponse<Student> studentResponse = new StudentResponse<>();
+        Student student = new Student(studentList.get(studentList.size() - 1).getStudentId(), studentRequest.getStudentName());
+        studentList.add(student);
+        studentResponse.setCode(200);
+        studentResponse.setMessage("create student success!");
+        studentResponse.setData(student);
+        return studentResponse;
+    }
 }
