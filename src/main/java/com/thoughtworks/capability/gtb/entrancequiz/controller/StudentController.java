@@ -1,5 +1,7 @@
 package com.thoughtworks.capability.gtb.entrancequiz.controller;
 
+import com.thoughtworks.capability.gtb.entrancequiz.dto.Group;
+import com.thoughtworks.capability.gtb.entrancequiz.dto.GroupResponse;
 import com.thoughtworks.capability.gtb.entrancequiz.dto.Student;
 import com.thoughtworks.capability.gtb.entrancequiz.dto.StudentResponse;
 import com.thoughtworks.capability.gtb.entrancequiz.service.StudentService;
@@ -32,5 +34,12 @@ public class StudentController {
     public ResponseEntity<StudentResponse<Student>> createStudent(@RequestBody Student student) {
         StudentResponse<Student> studentResponse = studentService.createStudent(student);
         return ResponseEntity.created(URI.create("/students")).body(studentResponse);
+    }
+
+    @GetMapping("/students/group")
+    @ResponseBody
+    public ResponseEntity<GroupResponse<List<Group>> > getGroupStudents() {
+        GroupResponse<List<Group>> groupingStudents = studentService.getGroupingStudents();
+        return ResponseEntity.ok(groupingStudents);
     }
 }

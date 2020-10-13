@@ -1,5 +1,7 @@
 package com.thoughtworks.capability.gtb.entrancequiz.serviceTests;
 
+import com.thoughtworks.capability.gtb.entrancequiz.dto.Group;
+import com.thoughtworks.capability.gtb.entrancequiz.dto.GroupResponse;
 import com.thoughtworks.capability.gtb.entrancequiz.dto.Student;
 import com.thoughtworks.capability.gtb.entrancequiz.dto.StudentResponse;
 import com.thoughtworks.capability.gtb.entrancequiz.service.StudentService;
@@ -31,6 +33,12 @@ public class StudentServiceTest {
                 .build();
         StudentResponse<Student> response = studentService.createStudent(student);
         assertEquals("create student success!", response.getMessage());
+    }
+
+    @Test
+    void should_return_grouping_students_when_get_group_student_success() {
+        GroupResponse<List<Group>> response = studentService.getGroupingStudents();
+        assertEquals("get grouping students success!", response.getMessage());
     }
 
 }

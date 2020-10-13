@@ -1,10 +1,13 @@
 package com.thoughtworks.capability.gtb.entrancequiz.service;
 
+import com.thoughtworks.capability.gtb.entrancequiz.dto.Group;
+import com.thoughtworks.capability.gtb.entrancequiz.dto.GroupResponse;
 import com.thoughtworks.capability.gtb.entrancequiz.dto.Student;
 import com.thoughtworks.capability.gtb.entrancequiz.dto.StudentResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -57,9 +60,34 @@ public class StudentService {
         }
         student.setStudentName(studentRequest.getStudentName());
         studentList.add(student);
-        studentResponse.setCode(200);
+        studentResponse.setCode(201);
         studentResponse.setMessage("create student success!");
         studentResponse.setData(student);
         return studentResponse;
+    }
+
+    public GroupResponse<List<Group>> getGroupingStudents() {
+        List<Student> shuffleStudents = studentList;
+        Collections.shuffle(shuffleStudents);
+        GroupResponse<List<Group>> groupResponse = new GroupResponse<>();
+        groupResponse.setCode(200);
+        groupResponse.setMessage("get grouping students success!");
+
+        List<Group> groups = new ArrayList<>();
+        int groupIndex = 0;
+        for (Student student: shuffleStudents) {
+            List<Student> students = new ArrayList<>();
+            Group group = new Group(groupIndex, students);
+            if (groups.size() < 6) {
+                groups.add(group);
+            }
+            groups.get(groupIndex).setGroupId(groupIndex + 1);
+            groups.get(groupIndex).getGroupList().add(student);
+            groupIndex++;
+            if (groupIndex == 6)
+                groupIndex = 0;
+        }
+        groupResponse.setData(groups);
+        return groupResponse;
     }
 }
