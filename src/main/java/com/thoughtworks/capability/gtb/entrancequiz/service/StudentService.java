@@ -67,7 +67,7 @@ public class StudentService {
     }
 
     public GroupResponse<List<Group>> getGroupingStudents() {
-        List<Student> shuffleStudents = studentList;
+        List<Student> shuffleStudents = new ArrayList<>(studentList);
         Collections.shuffle(shuffleStudents);
         GroupResponse<List<Group>> groupResponse = new GroupResponse<>();
         groupResponse.setCode(200);
