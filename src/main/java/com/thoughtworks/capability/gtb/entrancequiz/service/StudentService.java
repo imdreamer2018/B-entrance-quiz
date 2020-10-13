@@ -41,7 +41,13 @@ public class StudentService {
 
     public StudentResponse<Student> createStudent(Student studentRequest) {
         StudentResponse<Student> studentResponse = new StudentResponse<>();
-        Student student = new Student(studentList.get(studentList.size() - 1).getStudentId(), studentRequest.getStudentName());
+        Student student = new Student();
+        if (studentList.isEmpty()) {
+            student.setStudentId(1);
+        } else {
+            student.setStudentId(studentList.get(studentList.size() - 1).getStudentId() + 1);
+        }
+        student.setStudentName(studentRequest.getStudentName());
         studentList.add(student);
         studentResponse.setCode(200);
         studentResponse.setMessage("create student success!");
