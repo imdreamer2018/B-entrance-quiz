@@ -27,6 +27,10 @@ public class StudentService {
         return studentList;
     }
 
+    public static void deleteAllStudents() {
+        studentList.clear();
+    }
+
     public StudentResponse<List<Student>> getAllStudents() {
         StudentResponse<List<Student>> studentResponse = new StudentResponse<>();
         studentResponse.setCode(200);
