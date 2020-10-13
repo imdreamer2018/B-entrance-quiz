@@ -37,7 +37,7 @@ public class StudentControllerTest {
 
     @Test
     void should_return_all_students_when_get_all_students_success() throws Exception {
-        studentService.createStudent(student);
+        StudentService.addStudent(student);
         mockMvc.perform(get("/students"))
                 .andExpect(jsonPath("$.data", hasSize(1)))
                 .andExpect(jsonPath("$.data[0].studentName", is("杨乾")))
