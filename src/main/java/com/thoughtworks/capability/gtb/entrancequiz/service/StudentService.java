@@ -31,6 +31,10 @@ public class StudentService {
         studentList.clear();
     }
 
+    public static void addStudent(Student student) {
+        studentList.add(student);
+    }
+
     public StudentResponse<List<Student>> getAllStudents() {
         StudentResponse<List<Student>> studentResponse = new StudentResponse<>();
         studentResponse.setCode(200);
