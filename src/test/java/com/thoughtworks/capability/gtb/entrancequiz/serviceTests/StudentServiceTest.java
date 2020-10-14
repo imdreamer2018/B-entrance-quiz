@@ -1,44 +1,56 @@
 package com.thoughtworks.capability.gtb.entrancequiz.serviceTests;
 
-import com.thoughtworks.capability.gtb.entrancequiz.dto.Group;
-import com.thoughtworks.capability.gtb.entrancequiz.dto.GroupResponse;
+import com.thoughtworks.capability.gtb.entrancequiz.Repository.StudentRepository;
 import com.thoughtworks.capability.gtb.entrancequiz.dto.Student;
-import com.thoughtworks.capability.gtb.entrancequiz.dto.StudentResponse;
 import com.thoughtworks.capability.gtb.entrancequiz.service.StudentService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 @SpringBootTest
-public class StudentServiceTest {
+class StudentServiceTest {
 
-    @Autowired
-    StudentService studentService;
+    private StudentService studentService;
+
+    @Mock
+    StudentRepository studentRepository;
+
+    @BeforeEach
+    void setup() {
+        initMocks(this);
+        studentService = new StudentService(studentRepository);
+    }
 
 
     @Test
     void should_return_all_students_info_when_get_students_success() {
-        StudentResponse<List<Student>> response = studentService.getAllStudents();
-        assertEquals("get all students success!", response.getMessage());
+        Student student = Student.builder()
+                .name("李元芳")
+                .build();
+        List<Student> studentList = new ArrayList<>();
+        studentList.add(student);
+        when(studentRepository.findAll()).thenReturn(studentList);
+        List<Student> response = studentService.getAllStudents();
+        assertEquals("李元芳", response.get(0).getName());
     }
 
     @Test
     void should_return_student_info_when_create_student_success() {
         Student student = Student.builder()
-                .name("yangqian")
+                .name("李元芳")
                 .build();
-        StudentResponse<Student> response = studentService.createStudent(student);
-        assertEquals("create student success!", response.getMessage());
+        Student response = studentService.createStudent(student);
+        assertEquals("李元芳", response.getName());
     }
 
-    @Test
-    void should_return_grouping_students_when_get_group_student_success() {
-        GroupResponse<List<Group>> response = studentService.getGroupingStudents();
-        assertEquals("get grouping students success!", response.getMessage());
-    }
 
 }
