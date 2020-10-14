@@ -29,7 +29,7 @@ public class StudentServiceTest {
     @Test
     void should_return_student_info_when_create_student_success() {
         Student student = Student.builder()
-                .studentName("yangqian")
+                .name("yangqian")
                 .build();
         StudentResponse<Student> response = studentService.createStudent(student);
         assertEquals("create student success!", response.getMessage());

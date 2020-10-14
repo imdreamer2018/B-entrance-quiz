@@ -37,7 +37,7 @@ public class StudentControllerTest {
     void setUp() {
         StudentService.deleteAllStudents();
         student = Student.builder()
-                .studentName("杨乾")
+                .name("杨乾")
                 .build();
     }
 
@@ -60,7 +60,7 @@ public class StudentControllerTest {
         List<Student> all = StudentService.getAll();
         assertNotNull(all);
         assertEquals(all.size(), 1);
-        assertEquals(all.get(0).getStudentName(), "杨乾");
+        assertEquals(all.get(0).getName(), "杨乾");
     }
 
 }

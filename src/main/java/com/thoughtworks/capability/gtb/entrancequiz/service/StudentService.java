@@ -1,8 +1,6 @@
 package com.thoughtworks.capability.gtb.entrancequiz.service;
 
-import com.thoughtworks.capability.gtb.entrancequiz.Repository.GroupRepository;
 import com.thoughtworks.capability.gtb.entrancequiz.Repository.StudentRepository;
-import com.thoughtworks.capability.gtb.entrancequiz.dto.Group;
 import com.thoughtworks.capability.gtb.entrancequiz.dto.Student;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +23,12 @@ public class StudentService {
     public Student createStudent(Student studentRequest) {
         Student student = new Student();
         if (studentRepository.findAll().isEmpty()) {
-            student.setStudentId(1);
+            student.setId(1);
         } else {
             // GTB: 计算ID的逻辑略复杂，可以用字段来保存最大ID
-            student.setStudentId(studentRepository.getMaxStudentId() + 1);
+            student.setId(studentRepository.getMaxStudentId() + 1);
         }
-        student.setStudentName(studentRequest.getStudentName());
+        student.setName(studentRequest.getName());
         studentRepository.save(student);
         return student;
     }

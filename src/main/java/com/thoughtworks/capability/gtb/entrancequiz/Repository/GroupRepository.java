@@ -37,8 +37,9 @@ public class GroupRepository {
             if (groups.size() < groupNum) {
                 groups.add(group);
             }
-            groups.get(groupIndex).setGroupId(groupIndex + 1);
-            groups.get(groupIndex).getGroupList().add(student);
+            groups.get(groupIndex).setId(groupIndex + 1);
+            groups.get(groupIndex).setName(groupIndex + 1 + "组");
+            groups.get(groupIndex).getStudentList().add(student);
             groupIndex++;
             if (groupIndex == groupNum)
                 groupIndex = 0;

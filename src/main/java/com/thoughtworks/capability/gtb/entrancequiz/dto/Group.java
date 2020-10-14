@@ -14,9 +14,9 @@ import java.util.List;
 // GTB: Group中应该包含name字段
 public class Group {
 
-    private Integer groupId;
+    private Integer Id;
 
     private String name;
 
-    private List<Student> groupList;
+    private List<Student> studentList;
 }
