@@ -1,5 +1,6 @@
 package com.thoughtworks.capability.gtb.entrancequiz.service;
 
+import com.thoughtworks.capability.gtb.entrancequiz.Repository.StudentRepository;
 import com.thoughtworks.capability.gtb.entrancequiz.dto.Group;
 import com.thoughtworks.capability.gtb.entrancequiz.dto.GroupResponse;
 import com.thoughtworks.capability.gtb.entrancequiz.dto.Student;
@@ -13,59 +14,27 @@ import java.util.List;
 @Service
 public class StudentService {
 
-    static List<Student> studentList = initStudentList();
+    final StudentRepository studentRepository;
 
-    static List<Group> groups = new ArrayList<>();
-
-    private static List<Student> initStudentList() {
-        List<Student> studentList = new ArrayList<>();
-        String[] students = {
-                "成吉思汗", "鲁班七号", "太乙真人",
-                "钟无艳", "花木兰", "雅典娜",
-                "芈月", "白起", "刘禅",
-                "庄周", "马超", "刘备",
-                "哪吒", "大乔", "蔡文姬"
-        };
-        for (int i = 0; i < students.length; i++) {
-            studentList.add(new Student(i + 1, students[i]));
-        }
-        return studentList;
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
     }
 
-    public static void deleteAllStudents() {
-        studentList.clear();
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
     }
 
-    public static void addStudent(Student student) {
-        studentList.add(student);
-    }
-
-    public static List<Student> getAll() {
-        return studentList;
-    }
-
-    public StudentResponse<List<Student>> getAllStudents() {
-        StudentResponse<List<Student>> studentResponse = new StudentResponse<>();
-        studentResponse.setCode(200);
-        studentResponse.setMessage("get all students success!");
-        studentResponse.setData(studentList);
-        return studentResponse;
-    }
-
-    public StudentResponse<Student> createStudent(Student studentRequest) {
-        StudentResponse<Student> studentResponse = new StudentResponse<>();
+    public Student createStudent(Student studentRequest) {
         Student student = new Student();
-        if (studentList.isEmpty()) {
+        if (studentRepository.findAll().isEmpty()) {
             student.setStudentId(1);
         } else {
-            student.setStudentId(studentList.get(studentList.size() - 1).getStudentId() + 1);
+            // GTB: 计算ID的逻辑略复杂，可以用字段来保存最大ID
+            student.setStudentId(studentRepository.getMaxStudentId() + 1);
         }
         student.setStudentName(studentRequest.getStudentName());
-        studentList.add(student);
-        studentResponse.setCode(201);
-        studentResponse.setMessage("create student success!");
-        studentResponse.setData(student);
-        return studentResponse;
+        studentRepository.save(student);
+        return student;
     }
 
     public GroupResponse<List<Group>> getGroupingStudents() {
@@ -95,6 +64,8 @@ public class StudentService {
         for (Student student: shuffleStudents) {
             List<Student> students = new ArrayList<>();
             Group group = new Group(groupIndex, students);
+            // GTB: Magic Number
+            if (groups.size() < 6) {
             if (groups.size() < groupNum) {
                 groups.add(group);
             }
