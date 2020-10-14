@@ -42,4 +42,11 @@ public class StudentController {
         GroupResponse<List<Group>> groupingStudents = studentService.getGroupingStudents();
         return ResponseEntity.ok(groupingStudents);
     }
+
+    @PostMapping("/students/group")
+    @ResponseBody
+    public ResponseEntity<GroupResponse<List<Group>> > groupStudents() {
+        GroupResponse<List<Group>> groupingStudents = studentService.groupingStudents();
+        return ResponseEntity.ok(groupingStudents);
+    }
 }
