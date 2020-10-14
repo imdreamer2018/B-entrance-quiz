@@ -32,7 +32,7 @@ public class GroupRepository {
         int groupNum = 6;
         for (Student student: shuffleStudents) {
             List<Student> students = new ArrayList<>();
-            Group group = new Group(groupIndex, students);
+            Group group = new Group(groupIndex,groupIndex + "组" , students);
             // GTB: Magic Number
             if (groups.size() < groupNum) {
                 groups.add(group);
