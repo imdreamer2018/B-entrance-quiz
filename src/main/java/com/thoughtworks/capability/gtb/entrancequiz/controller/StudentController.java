@@ -42,15 +42,13 @@ public class StudentController {
     @GetMapping("/students/group")
     @ResponseBody
     // GTB: 应该创建专门的对象来表示小组
-    public ResponseEntity<GroupResponse<List<Group>> > getGroupStudents() {
-        GroupResponse<List<Group>> groupingStudents = studentService.getGroupingStudents();
-        return ResponseEntity.ok(groupingStudents);
+    public ResponseEntity<List<Group>> getGroupStudents() {
+        return ResponseEntity.ok(studentService.getGroupingStudents());
     }
 
     @PostMapping("/students/group")
     @ResponseBody
-    public ResponseEntity<GroupResponse<List<Group>> > groupStudents() {
-        GroupResponse<List<Group>> groupingStudents = studentService.groupingStudents();
-        return ResponseEntity.ok(groupingStudents);
+    public ResponseEntity<List<Group>>  groupStudents() {
+        return ResponseEntity.ok(studentService.groupingStudents());
     }
 }
