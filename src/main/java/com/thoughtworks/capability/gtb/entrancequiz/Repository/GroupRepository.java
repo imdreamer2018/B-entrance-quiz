@@ -24,6 +24,10 @@ public class GroupRepository {
         return groups;
     }
 
+    public void save(Group group) {
+        groups.add(group);
+    }
+
     public void grouping() {
         groups.clear();
         List<Student> shuffleStudents = new ArrayList<>(studentRepository.findAll());
@@ -45,4 +49,8 @@ public class GroupRepository {
                 groupIndex = 0;
             }
         }
+
+    public void deleteAll() {
+        groups.clear();
+    }
 }
