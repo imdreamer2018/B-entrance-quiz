@@ -1,13 +1,9 @@
 package com.thoughtworks.capability.gtb.entrancequiz.controller;
 
 import com.thoughtworks.capability.gtb.entrancequiz.dto.Group;
-import com.thoughtworks.capability.gtb.entrancequiz.dto.GroupResponse;
 import com.thoughtworks.capability.gtb.entrancequiz.dto.Student;
-import com.thoughtworks.capability.gtb.entrancequiz.dto.StudentResponse;
 import com.thoughtworks.capability.gtb.entrancequiz.service.StudentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,8 +15,11 @@ public class StudentController {
 
     // GTB: 推荐使用构造函数注入
     // GTB: 违反封装性，字段应该使用private修饰
-    @Autowired
-    StudentService studentService;
+    private final StudentService studentService;
+
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     // GTB: 可以使用类级别的@RequestMapping抽取公共的路径前缀
     // GTB: 违反Restful实践，请求成功后直接返回数据即可，不需要用StudentResponse再包一层
