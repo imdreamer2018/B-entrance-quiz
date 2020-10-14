@@ -13,11 +13,9 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
 
-    private final GroupRepository groupRepository;
 
-    public StudentService(StudentRepository studentRepository, GroupRepository groupRepository) {
+    public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
-        this.groupRepository = groupRepository;
     }
 
     public List<Student> getAllStudents() {
@@ -35,15 +33,6 @@ public class StudentService {
         student.setStudentName(studentRequest.getStudentName());
         studentRepository.save(student);
         return student;
-    }
-
-    public List<Group> getGroupingStudents() {
-        return groupRepository.findAll();
-    }
-
-    public List<Group> groupingStudents() {
-        groupRepository.grouping();
-        return groupRepository.findAll();
     }
 
 }
