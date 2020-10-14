@@ -15,6 +15,8 @@ public class StudentService {
 
     static List<Student> studentList = initStudentList();
 
+    static List<Group> groups = new ArrayList<>();
+
     private static List<Student> initStudentList() {
         List<Student> studentList = new ArrayList<>();
         String[] students = {
@@ -67,27 +69,41 @@ public class StudentService {
     }
 
     public GroupResponse<List<Group>> getGroupingStudents() {
-        List<Student> shuffleStudents = new ArrayList<>(studentList);
-        Collections.shuffle(shuffleStudents);
+        GroupResponse<List<Group>> groupResponse = new GroupResponse<>();
+        groupResponse.setCode(200);
+        groupResponse.setMessage("get grouping students success!");
+        groupResponse.setData(groups);
+        return groupResponse;
+    }
+
+    public GroupResponse<List<Group>> groupingStudents() {
+        groups.clear();
         GroupResponse<List<Group>> groupResponse = new GroupResponse<>();
         groupResponse.setCode(200);
         groupResponse.setMessage("get grouping students success!");
 
-        List<Group> groups = new ArrayList<>();
+        grouping();
+        groupResponse.setData(groups);
+        return groupResponse;
+    }
+
+    private static void grouping() {
+        List<Student> shuffleStudents = new ArrayList<>(studentList);
+        Collections.shuffle(shuffleStudents);
         int groupIndex = 0;
+        int groupNum = 6;
         for (Student student: shuffleStudents) {
             List<Student> students = new ArrayList<>();
             Group group = new Group(groupIndex, students);
-            if (groups.size() < 6) {
+            if (groups.size() < groupNum) {
                 groups.add(group);
             }
             groups.get(groupIndex).setGroupId(groupIndex + 1);
             groups.get(groupIndex).getGroupList().add(student);
             groupIndex++;
-            if (groupIndex == 6)
+            if (groupIndex == groupNum)
                 groupIndex = 0;
         }
-        groupResponse.setData(groups);
-        return groupResponse;
     }
+
 }
