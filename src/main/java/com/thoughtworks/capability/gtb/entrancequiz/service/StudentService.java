@@ -1,23 +1,23 @@
 package com.thoughtworks.capability.gtb.entrancequiz.service;
 
+import com.thoughtworks.capability.gtb.entrancequiz.Repository.GroupRepository;
 import com.thoughtworks.capability.gtb.entrancequiz.Repository.StudentRepository;
 import com.thoughtworks.capability.gtb.entrancequiz.dto.Group;
-import com.thoughtworks.capability.gtb.entrancequiz.dto.GroupResponse;
 import com.thoughtworks.capability.gtb.entrancequiz.dto.Student;
-import com.thoughtworks.capability.gtb.entrancequiz.dto.StudentResponse;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
 public class StudentService {
 
-    final StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
-    public StudentService(StudentRepository studentRepository) {
+    private final GroupRepository groupRepository;
+
+    public StudentService(StudentRepository studentRepository, GroupRepository groupRepository) {
         this.studentRepository = studentRepository;
+        this.groupRepository = groupRepository;
     }
 
     public List<Student> getAllStudents() {
@@ -37,44 +37,13 @@ public class StudentService {
         return student;
     }
 
-    public GroupResponse<List<Group>> getGroupingStudents() {
-        GroupResponse<List<Group>> groupResponse = new GroupResponse<>();
-        groupResponse.setCode(200);
-        groupResponse.setMessage("get grouping students success!");
-        groupResponse.setData(groups);
-        return groupResponse;
+    public List<Group> getGroupingStudents() {
+        return groupRepository.findAll();
     }
 
-    public GroupResponse<List<Group>> groupingStudents() {
-        groups.clear();
-        GroupResponse<List<Group>> groupResponse = new GroupResponse<>();
-        groupResponse.setCode(200);
-        groupResponse.setMessage("get grouping students success!");
-
-        grouping();
-        groupResponse.setData(groups);
-        return groupResponse;
-    }
-
-    private static void grouping() {
-        List<Student> shuffleStudents = new ArrayList<>(studentList);
-        Collections.shuffle(shuffleStudents);
-        int groupIndex = 0;
-        int groupNum = 6;
-        for (Student student: shuffleStudents) {
-            List<Student> students = new ArrayList<>();
-            Group group = new Group(groupIndex, students);
-            // GTB: Magic Number
-            if (groups.size() < 6) {
-            if (groups.size() < groupNum) {
-                groups.add(group);
-            }
-            groups.get(groupIndex).setGroupId(groupIndex + 1);
-            groups.get(groupIndex).getGroupList().add(student);
-            groupIndex++;
-            if (groupIndex == groupNum)
-                groupIndex = 0;
-        }
+    public List<Group> groupingStudents() {
+        groupRepository.grouping();
+        return groupRepository.findAll();
     }
 
 }
