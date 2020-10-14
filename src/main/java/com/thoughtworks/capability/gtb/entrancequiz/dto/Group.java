@@ -11,6 +11,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+// GTB: Group中应该包含name字段
 public class Group {
 
     private Integer groupId;

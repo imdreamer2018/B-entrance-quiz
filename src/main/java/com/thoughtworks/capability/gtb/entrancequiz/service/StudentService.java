@@ -13,10 +13,12 @@ import java.util.List;
 @Service
 public class StudentService {
 
+    // GTB: 不符合三层架构，缺少用于保存数据的Repository层
     static List<Student> studentList = initStudentList();
 
     private static List<Student> initStudentList() {
         List<Student> studentList = new ArrayList<>();
+        // GTB: 可以使用Java8 Stream API简化
         String[] students = {
                 "成吉思汗", "鲁班七号", "太乙真人",
                 "钟无艳", "花木兰", "雅典娜",
@@ -56,6 +58,7 @@ public class StudentService {
         if (studentList.isEmpty()) {
             student.setStudentId(1);
         } else {
+            // GTB: 计算ID的逻辑略复杂，可以用字段来保存最大ID
             student.setStudentId(studentList.get(studentList.size() - 1).getStudentId() + 1);
         }
         student.setStudentName(studentRequest.getStudentName());
@@ -78,6 +81,7 @@ public class StudentService {
         for (Student student: shuffleStudents) {
             List<Student> students = new ArrayList<>();
             Group group = new Group(groupIndex, students);
+            // GTB: Magic Number
             if (groups.size() < 6) {
                 groups.add(group);
             }
