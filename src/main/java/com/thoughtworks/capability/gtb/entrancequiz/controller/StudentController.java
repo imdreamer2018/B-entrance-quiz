@@ -33,15 +33,4 @@ public class StudentController {
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
         return ResponseEntity.created(URI.create("/students")).body(studentService.createStudent(student));
     }
-
-    @GetMapping("students/group")
-    // GTB: 应该创建专门的对象来表示小组
-    public ResponseEntity<List<Group>> getGroupStudents() {
-        return ResponseEntity.ok(studentService.getGroupingStudents());
-    }
-
-    @PostMapping("students/group")
-    public ResponseEntity<List<Group>>  groupStudents() {
-        return ResponseEntity.ok(studentService.groupingStudents());
-    }
 }
