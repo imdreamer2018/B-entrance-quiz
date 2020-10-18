@@ -28,6 +28,7 @@ public class StudentService {
             // GTB: 计算ID的逻辑略复杂，可以用字段来保存最大ID
             student.setId(studentRepository.getMaxStudentId() + 1);
         }
+        studentRepository.saveMaxStudentId(student.getId());
         student.setName(studentRequest.getName());
         studentRepository.save(student);
         return student;

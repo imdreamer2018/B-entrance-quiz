@@ -3,12 +3,13 @@ package com.thoughtworks.capability.gtb.entrancequiz.Repository;
 import com.thoughtworks.capability.gtb.entrancequiz.dto.Group;
 import com.thoughtworks.capability.gtb.entrancequiz.dto.Student;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Configuration
+@Repository
 public class GroupRepository {
 
     private final StudentRepository studentRepository;
@@ -17,7 +18,7 @@ public class GroupRepository {
         this.studentRepository = studentRepository;
     }
 
-    private static List<Group> groups = new ArrayList<>();
+    private List<Group> groups = new ArrayList<>();
 
 
     public List<Group> findAll() {
